@@ -17,7 +17,7 @@ public class Employee {
         this.hireDate = hireDate;
     }
 
-    // Геттеры и сеттеры для ВСЕХ полей
+    // Геттеры и сеттеры для всех полей
     public Long getId() {
         return id;
     }
@@ -68,4 +68,6 @@ public class Employee {
                 ", hireDate=" + hireDate +
                 '}';
     }
+
 }
+

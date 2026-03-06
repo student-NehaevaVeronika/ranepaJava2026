@@ -19,7 +19,7 @@ public class HRMApplication {
         EmployeeRepository repository = new EmployeeRepository();
         service = new HRMService(repository);
 
-        System.out.println("=== Система управления персоналом HRM Lite ===");
+        System.out.println("Система управления персоналом HRM Lite");
         
         boolean running = true;
         while (running) {
@@ -42,6 +42,9 @@ public class HRMApplication {
                 case 5:
                     showStatistics();
                     break;
+                case 6:
+                    filterByPosition();
+                    break;
                 case 0:
                     System.out.println("Выход из программы...");
                     running = false;
@@ -55,12 +58,13 @@ public class HRMApplication {
     }
 
     private static void printMenu() {
-        System.out.println("=== HRM System Menu ===");
+        System.out.println("HRM System Menu");
         System.out.println("1. Показать всех сотрудников");
         System.out.println("2. Добавить сотрудника");
         System.out.println("3. Удалить сотрудника по ID");
         System.out.println("4. Найти сотрудника по ID");
         System.out.println("5. Показать статистику");
+        System.out.println("6. Фильтр сотрудников по должности");
         System.out.println("0. Выход");
     }
 
@@ -69,7 +73,7 @@ public class HRMApplication {
         if (employees.isEmpty()) {
             System.out.println("Список сотрудников пуст.");
         } else {
-            System.out.println("=== Список всех сотрудников ===");
+            System.out.println("Список всех сотрудников");
             for (Employee emp : employees) {
                 System.out.println(emp);
             }
@@ -77,7 +81,7 @@ public class HRMApplication {
     }
 
     private static void addEmployee() {
-        System.out.println("=== Добавление нового сотрудника ===");
+        System.out.println("Добавление нового сотрудника");
         
         String name = readString("Введите имя: ");
         String position = readString("Введите должность: ");
@@ -110,7 +114,7 @@ public class HRMApplication {
     }
 
     private static void showStatistics() {
-        System.out.println("=== Статистика ===");
+        System.out.println("Статистика");
         double avgSalary = service.calculateAverageSalary();
         System.out.printf("Средняя зарплата: %.2f%n", avgSalary);
         
@@ -120,6 +124,22 @@ public class HRMApplication {
             System.out.println(topPaid.get());
         } else {
             System.out.println("Нет данных о сотрудниках.");
+        }
+    }
+
+    // 🔹 НОВЫЙ МЕТОД: Фильтрация по должности
+    private static void filterByPosition() {
+        System.out.println("Фильтр по должности");
+        String position = readString("Введите должность для поиска: ");
+        List<Employee> filtered = service.filterByPosition(position);
+        
+        if (filtered.isEmpty()) {
+            System.out.println("Сотрудников с должностью '" + position + "' не найдено.");
+        } else {
+            System.out.println("Найдено сотрудников: " + filtered.size());
+            for (Employee emp : filtered) {
+                System.out.println(emp);
+            }
         }
     }
 
